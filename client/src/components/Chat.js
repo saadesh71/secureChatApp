@@ -134,7 +134,6 @@ function Chat(props) {
   }
 
   function handlePrivateClick(user) {
-    console.log(props.allUsers);
     const hide = immer(props.allUsers, (draft) => {
       draft.find((u) => u.username === user.username).private = true;
     });
@@ -224,7 +223,6 @@ function Chat(props) {
       ids.push(props.allUsers[index].id);
     });
     room[currGroupName] = ids;
-    console.log(room);
     props.socketRef.current.emit("room created", room);
     setShowGroupUsersDialog(false);
     setChecked([]);

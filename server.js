@@ -28,7 +28,6 @@ io.on("connection", (socket) => {
       id: socket.id,
       private: false,
     };
-    console.log(user);
     users.push(user);
     userPins[username] = { pin: "", status: "" };
     io.emit("new user", users, userPins);
@@ -68,17 +67,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("authenticate user", (pin, socketId, senderName) => {
-    console.log("68", pin, socketId, senderName);
     socket.to(socketId).emit("authenticate", pin, senderName);
   });
 
   socket.on("user authenticated", (socketId, senderName) => {
-    console.log("72", socketId, senderName);
     socket.to(socketId).emit("authenticated", senderName);
   });
 
   socket.on("user pin generated", (socketId, chatName) => {
-    console.log("78", socketId, chatName);
     socket.to(socketId).emit("set generated", chatName);
   });
 
