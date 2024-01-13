@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
 const initialMessagesState = {
-  general: [],
+  General: [],
 };
 
 function App() {
@@ -21,16 +21,16 @@ function App() {
   const [connected, setConnected] = useState(false);
   const [currentChat, setCurrentChat] = useState({
     isChannel: true,
-    chatName: "general",
+    chatName: "General",
     receiverId: "",
   });
-  const [connectedRooms, setConnectedRooms] = useState(["general"]);
+  const [connectedRooms, setConnectedRooms] = useState(["General"]);
   const [allUsers, setAllUsers] = useState([]);
   const [messages, setMessages] = useState(initialMessagesState);
   const [message, setMessage] = useState("");
   const socketRef = useRef();
   const [userPins, setUserPins] = useState({
-    general: {
+    General: {
       pin: "",
       status: "authenticated",
     },
@@ -44,7 +44,7 @@ function App() {
   const [privatePin, setPrivatePin] = useState("");
   const [currPrivatePin, setCurrPrivatePin] = useState("");
   const [newRoom, setNewRoom] = useState({});
-  const [rooms, setRooms] = useState(["general"]);
+  const [rooms, setRooms] = useState(["General"]);
 
   function handleMessageChange(e) {
     setMessage(e.target.value);
@@ -55,7 +55,6 @@ function App() {
   }, [messages]);
 
   useEffect(() => {
-    console.log(pinStatus);
     if (Object.keys(pinStatus).length != 0) {
       console.log(pin);
       if (pin != "") {
@@ -189,7 +188,7 @@ function App() {
     socketRef.current = io.connect("/");
     console.log(socketRef);
     socketRef.current.emit("join server", username);
-    socketRef.current.emit("join room", "general", (messages) =>
+    socketRef.current.emit("join room", "General", (messages) =>
       roomJoinCallback()
     );
     socketRef.current.on("new user", (allUsers, allUserPins) => {

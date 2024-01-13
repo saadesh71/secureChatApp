@@ -18,7 +18,7 @@ const io = new Server(server, {
 let users = [];
 let userPins = {};
 const messages = {
-  general: [],
+  General: [],
 };
 
 io.on("connection", (socket) => {

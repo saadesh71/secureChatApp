@@ -1,0 +1,14 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .centered-form {
+    width: 100%; /* Adjust the width as needed, or set a max-width */
+    max-width: 360px; /* This will ensure the form doesn't stretch too wide on larger screens */
+    display: flex;
+    flex-direction: column;
+  }
+  

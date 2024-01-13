@@ -23,12 +23,15 @@ const Container = styled.div`
   height: 98vh;
   width: 190vh;
   display: flex;
+  background: #ededed;
 `;
 
 const SideBar = styled.div`
   height: 100%;
   width: 10%;
-  border-right: 1px solid black;
+  background: #2C3E50;
+  color: white;
+  box-sizing: border-box;
 ;l`;
 
 const ChatPanel = styled.div`
@@ -36,35 +39,68 @@ const ChatPanel = styled.div`
   width: 85%;
   display: flex;
   flex-direction: column;
+  background: #f7f7f7;
 `;
 
 const BodyContainer = styled.div`
   width: 100%;
   height: 75%;
-  overflow: scroll;
-  border-bottom: 1px solid black;
+  background: white;
 `;
 
 const TextBox = styled.textarea`
   height: 15%;
   width: 100%;
+  border: none;
+  border-top: 1px solid #cccccc;
+  border-radius: 0;
 `;
 
 const ChannelInfo = styled.div`
   height: 10%;
   width: 100%;
-  border-bottom: 1px solid black;
+  background: #2c3e50;
+  color: white;
+  box-sizing: border-box;
   font-weight: bold;
+  display: flex; // Use flexbox for easy centering
+  justify-content: center; // Center horizontally
+  align-items: center; // Center vertically
+  padding: 0 20px; // Optional padding for some spacing on the sides
 `;
 
 const Row = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+`;
+
+const StyledMessage = styled.div`
+  background-color: ${(props) =>
+    props.isCurrentUser
+      ? "#1976D2"
+      : "#e0e0e0"}; // Different background color for current user
+  color: ${(props) =>
+    props.isCurrentUser ? "white" : "black"}; // Text color based on the user
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin: 8px 0;
+  max-width: 75%; // Adjust the width of the message bubble as needed
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2); // Subtle shadow effect
+  align-self: ${(props) => (props.isCurrentUser ? "flex-end" : "flex-start")};
+  word-wrap: break-word;
+  display: inline-block;
+  text-align: ${(props) => (props.isCurrentUser ? "right" : "left")};
+  font-size: 18px;
+  line-height: 1.4;
+  position: relative; // For positioning the message within the flex container
 `;
 
 const Messages = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  padding: 10px;
 `;
 
 function Chat(props) {
@@ -116,16 +152,18 @@ function Chat(props) {
         <div>
           <Row
             onClick={() => {
-              console.log(props.userPins);
-              console.log(props.currentChat.chatName);
               props.toggleChat(currentChat);
             }}
             key={user.id}
           >
-            <div style={{ display: "flex" }}>
-              <div style={{ paddingLeft: 10, paddingTop: 8 }}>
-                {user.username}
-              </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <div style={{ padding: "10px" }}>{user.username}</div>
               {user.private ? (
                 <div>
                   <IconButton onClick={() => handlePrivateClick(user)}>
@@ -147,10 +185,14 @@ function Chat(props) {
   }
 
   function renderMessages(message, index) {
+    const currentUser = props.username; // Replace with actual current user's identifier
+    const isCurrentUser = message.sender === currentUser;
+
     return (
-      <div key={index}>
-        <h3>{message.sender}</h3>
-        <p>{message.content}</p>
+      <div>
+        <StyledMessage key={index} isCurrentUser={isCurrentUser}>
+          {message.content}
+        </StyledMessage>
       </div>
     );
   }
