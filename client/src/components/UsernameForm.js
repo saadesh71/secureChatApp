@@ -1,10 +1,25 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@mui/material/Button";
 import logo from "./logo.png";
 import "./Form.css"; // Assuming you have a CSS file for styles
 
+const useStyles = makeStyles({
+  input: {
+    "& input[type=number]::-webkit-outer-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "& input[type=number]::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+  },
+});
+
 function Form(props) {
+  const classes = useStyles();
   return (
     <div className="form-container">
       {" "}
@@ -25,10 +40,13 @@ function Form(props) {
         <div>
           <TextField
             label="Pin"
+            onInput={(e) => {
+              e.target.value = Math.max(0, parseInt(e.target.value))
+                .toString()
+                .slice(0, 4);
+            }}
             type="number"
-            value={props.privatePin}
-            onChange={props.onPrivatePinChange}
-            style={{ paddingBottom: "20px" }}
+            className={classes.input}
           />
         </div>
         <div>
