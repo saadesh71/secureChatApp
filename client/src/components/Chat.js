@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -20,15 +20,15 @@ import Checkbox from "@mui/material/Checkbox";
 import logo from "./logo.png";
 
 const Container = styled.div`
-  height: 98vh;
-  width: 190vh;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   background: #ededed;
 `;
 
 const SideBar = styled.div`
   height: 100%;
-  width: 10%;
+  width: 15%;
   background: #2C3E50;
   color: white;
   box-sizing: border-box;

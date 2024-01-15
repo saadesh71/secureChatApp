@@ -56,11 +56,8 @@ function App() {
 
   useEffect(() => {
     if (Object.keys(pinStatus).length != 0) {
-      console.log(pin);
       if (pin != "") {
-        console.log(userPins[Object.keys(pinStatus)[0]].pin == pin);
         if (userPins[Object.keys(pinStatus)[0]].pin == pin) {
-          console.log(Object.keys(pinStatus)[0], "authenticated");
           const status = immer(userPins, (draft) => {
             draft[Object.keys(pinStatus)[0]].status = "authenticated";
           });
@@ -84,9 +81,7 @@ function App() {
     if (Object.keys(newRoom).length != 0) {
       let roomname = Object.keys(newRoom)[0];
       let ids = Object.values(newRoom)[0];
-      console.log(roomname);
       if (ids.includes(allUsers.find((u) => u.username === username).id)) {
-        console.log(roomname);
         let newRooms = [...rooms];
         newRooms.push(roomname);
         let newMessages = immer(messages, (draft) => {
@@ -136,10 +131,8 @@ function App() {
   }
 
   function setPins(currentChat) {
-    console.log(currentChat);
     const pin = Math.floor(100000 + Math.random() * 900000);
     const pins = immer(userPins, (draft) => {
-      console.log(draft[currentChat.chatName]);
       draft[currentChat.chatName].pin = pin.toString();
       draft[currentChat.chatName].status = "generated";
     });
@@ -186,7 +179,6 @@ function App() {
   function connect() {
     setConnected(true);
     socketRef.current = io.connect("/");
-    console.log(socketRef);
     socketRef.current.emit("join server", username);
     socketRef.current.emit("join room", "General", (messages) =>
       roomJoinCallback()
@@ -208,16 +200,13 @@ function App() {
       });
     });
     socketRef.current.on("set generated", (chatName) => {
-      console.log(chatName);
       setPinStatus({ [chatName]: "generated" });
     });
     socketRef.current.on("authenticate", (pin, senderName) => {
-      console.log(pin, senderName);
       setPin(pin);
       setPinStatus({ [senderName]: "" });
     });
     socketRef.current.on("authenticated", (senderName) => {
-      console.log(senderName);
       setPinStatus({ [senderName]: "authenticated" });
     });
     socketRef.current.on("add room", (room) => {
@@ -264,7 +253,6 @@ function App() {
 
   function handleClose() {
     setShowPinDialog(false);
-    console.log(currPin, currentChat.receiverId, username);
     socketRef.current.emit(
       "authenticate user",
       currPin,
@@ -281,7 +269,6 @@ function App() {
     if (currPrivatePin === privatePin) {
       setPinAsk(false);
     } else {
-      console.log("pin incorrect");
     }
   }
 
